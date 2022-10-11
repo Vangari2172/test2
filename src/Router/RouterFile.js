@@ -29,8 +29,8 @@ const RouterFile = () => {
           <Route exact path="/add" element={<AddProduct addData={addData} />} />
           <Route
             exact
-            path="/edit/"
-            element={<EditProduct editTable={add} />}
+            path="/edit/:id"
+            element={<EditProduct editTable={add} setAdd={setAdd} />}
           />
         </Routes>
       </Router>

@@ -1,47 +1,50 @@
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 const EditProduct = (props) => {
-  console.log("props", props);
+  console.log("props", props.editTable);
   const userDetails = useParams();
+  const data = props.editTable.filter((elem) => elem.id === userDetails.id);
+  const newdata = props.editTable.filter((elem) => elem.id !== userDetails.id);
 
-  //   const navigate = useNavigate();
-  //   const [pName, setPName] = useState(props.editList[0].pName);
-  //   const [pDes, setPDes] = useState(props.editList[0].pDes);
-  //   const [price, setPrice] = useState(props.editList[0].price);
-  //   const [quantity, setQuantity] = useState(props.editList[0].quantity);
+  const navigate = useNavigate();
 
-  const data = props.table.filter((elem) => elem.id === userDetails.id);
+  const [pName, setPName] = useState(data[0].pName);
+  const [pDes, setPDes] = useState(data[0].pDes);
+  const [price, setPrice] = useState(data[0].price);
+  const [quantity, setQuantity] = useState(data[0].quantity);
 
   console.log("data", data);
 
-  //   const handleUpdate = (e) => {
-  //     e.preventDefault();
+  const handleUpdate = (e) => {
+    e.preventDefault();
 
-  //     const arr = {
-  //       id: props.editList[0].id,
-  //       pName: pName,
-  //       pDes: pDes,
-  //       price: price,
-  //       quantity: quantity,
-  //     };
-  //     props.update(arr);
-  //     //     dispatch(update_user(arr));
-  //     //     alert("Data updated successfully");
-  //     navigate("/");
-  //   };
+    const arr = {
+      id: data[0].id,
+      pName: pName,
+      pDes: pDes,
+      price: price,
+      quantity: quantity,
+    };
+    newdata.push(arr);
+    console.log("arr", arr);
+    props.setAdd(newdata);
+
+    alert("Data updated successfully");
+    navigate("/");
+  };
   return (
     <div className="container mt-5">
-      <form className="row">
+      <form onSubmit={handleUpdate} className="row">
         <div className="col-6 mb-5">
           <input
             type="text"
             required
             placeholder="Product Name"
             className="form-control"
-            // value={pName}
-            // onChange={(e) => setPName(e.target.value)}
+            value={pName}
+            onChange={(e) => setPName(e.target.value)}
           />
         </div>
         <div className="col-6 mb-5">
@@ -50,8 +53,8 @@ const EditProduct = (props) => {
             required
             placeholder="Product Description"
             className="form-control"
-            // value={pDes}
-            // onChange={(e) => setPDes(e.target.value)}
+            value={pDes}
+            onChange={(e) => setPDes(e.target.value)}
           />
         </div>
         <div className="col-6 mb-5">
@@ -61,8 +64,8 @@ const EditProduct = (props) => {
             className="form-control"
             required
             min="0"
-            // value={price}
-            // onChange={(e) => setPrice(e.target.value)}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
         <div className="col-6 mb-5">
@@ -72,8 +75,8 @@ const EditProduct = (props) => {
             className="form-control"
             required
             min="0"
-            // value={quantity}
-            // onChange={(e) => setQuantity(e.target.value)}
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
           />
         </div>
         <div className="text-center">
